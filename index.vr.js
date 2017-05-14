@@ -23,11 +23,32 @@ export default class EventPlannerVR extends React.Component {
   constructor() {
     super();
     this.state = {
-       rotation: 130,
-	     zoom: -70,
-       textColor: 'white',
-       isOverlay: true
+       overlayClicked: true
     };
+    this.handleOverlayClicked = this.handleOverlayClicked.bind(this);
+  }
+
+  handleOverlayClicked() {
+    console.log('hiding overlay');
+
+    this.setState((props) => {
+      return {overlayClicked:false};
+    });
+  }
+
+    render() {
+    return (
+      <Backdrop overlayClicked={this.state.handleOverlayClicked}/>
+          );
+  }
+};
+
+
+
+class HomeBackdrop extends React.Compoent {
+
+  constructor() {
+    super();
 
     this.styles = StyleSheet.create({
       menu: {
@@ -35,26 +56,33 @@ export default class EventPlannerVR extends React.Component {
         flexDirection: 'column',
         width: 1,
         alignItems: 'stretch',
-        transform: [{translate: [2, 2, -5]}], },
+        transform: [{translate: [2, 2, -5]}]},
       intro: {
-        transform: [{translate: [0, 0, -5]}], },
+        transform: [{translate: [0, 0, -5]}]},
       });
-    const randomPosition = () => Math.floor(Math.random() * 10) - 5;
-    //const grid = xprod(1, 2);
-    //console.log('hello grid ' + grid);
-    // this.tables = grid.map((entry, index) => {
-    //   console.log('grid '+index);
-    //   return {
-    //     x: entry[0] * 8 + randomPosition(),
-    //     y: entry[1] * 8 + randomPosition(),
-    //     id: index,
-    //   };
-    // });
-    this.calculateTables(1);
-    //this.isOverlay = true;
-    this.showBigTable = false;
-    this.hideOverlay = this.hideOverlay.bind(this);
+    }
 
+  render() {
+  return (
+    <View>
+
+  <Pano source={asset('Church_Photo.jpg')}/>
+  <View style={ this.styles.intro }>
+    <Overlay overlayCallback={this.props.onOverlayClicked}/>
+  </View>
+
+    </View>
+
+  );}
+}
+
+class WeddingBackdrop extends React.Compoent {
+  changeTables() {
+    console.log('doing something');
+    this.setState(() => {
+      this.calculateTables(2);
+      this.showBigTable = ! this.showBigTable
+    })
   }
 
   calculateTables(size) {
@@ -79,47 +107,40 @@ export default class EventPlannerVR extends React.Component {
     })
   }
 
-  doSomethingInteresting() {
-    console.log('doing something');
-    this.setState(() => {
-      this.calculateTables(2);
-      this.showBigTable = ! this.showBigTable
-    })
+  constructor() {
+    super();
+    this.state = {
+       rotation: 130,
+       zoom: -70,
+       textColor: 'white',
+    };
+
+
+    this.calculateTables(1);
+    //this.overlayClicked = true;
+    this.showBigTable = false;
+
+
   }
 
 
-  hideOverlay() {
-    console.log('hiding overlay');
-
-    this.setState((props) => {
-      return {isOverlay:false};
-    });
-  }
-
-    render() {
-    return (
-
+  render() {
+  return (
     <View>
-      {this.state.isOverlay ?
-        <View>
-      <Pano source={asset('Church_Photo.jpg')}/>
-      <View style={ this.styles.intro }>
-        <Overlay overlayCallback={this.hideOverlay}/>
-      </View>
-      </View> : <View>
-      <Pano source={asset('Testing.png')}/>      
+       <View>
+      <Pano source={asset('Testing.png')}/>
       <View
         style={{
             layoutOrigin: [0.5, 0.5],
             transform: [{translate: [7, -1, -3]}],
         }}
         >
-      <Button text='click me' callback={ () => this.doSomethingInteresting() } />
+      <Button text='click me' callback={ () => this.changeTables() } />
 
 
     </View>
 
-   <Text
+    <Text
       style={{
           color: this.state.textColor,
           backgroundColor: '#777879',
@@ -146,8 +167,8 @@ export default class EventPlannerVR extends React.Component {
         style={{transform: [{translate: [0, -600, -300]}]}}
       />
 
- <View>
-   {  (this.showBigTable ?
+    <View>
+    {  (this.showBigTable ?
       <Model
           style={{
               layoutOrigin: [0.5, 0.5],
@@ -165,9 +186,9 @@ export default class EventPlannerVR extends React.Component {
         :
           <View/>)
     }
- </View>
+    </View>
 
- <View>
+    <View>
     {this.tables.map(table => {
       return (<Model
           style={{
@@ -185,7 +206,7 @@ export default class EventPlannerVR extends React.Component {
           />
       );
     })}
- </View>
+    </View>
 
     <Plane
       dimWidth={10}
@@ -195,9 +216,27 @@ export default class EventPlannerVR extends React.Component {
 
       </View>
     }
-</View>
-          );
+
+
   }
-};
+
+
+class Backdrop extends React.Component {
+
+  render() {
+
+  return (
+    <View>
+  //   {this.props.overlayClicked ?
+  //     <WeddingBackdrop />
+   //
+  //    :
+   //
+  //    </HomeBackdrop />
+  //  }
+   </View>
+);
+}
+}
 
 AppRegistry.registerComponent('EventPlannerVR', () => EventPlannerVR);

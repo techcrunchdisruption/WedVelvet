@@ -22,7 +22,7 @@ export default class Overlay extends React.Component {
 
 	onCallback(){
 			console.log('in onCallback');
-			this.props.overlayCallback();
+			this.props.onOverlayClicked();
 	}
 
 		render() {
