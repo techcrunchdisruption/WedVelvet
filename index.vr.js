@@ -12,7 +12,10 @@ import {
   Plane,
 } from 'react-vr';
 
-import Button from './button.js';
+//import Button from './button.js';
+//import Table from './table.js';
+
+//import {flatten, range, map, xprod} from 'ramda';
 
 export default class EventPlannerVR extends React.Component {
   constructor() {
@@ -20,15 +23,42 @@ export default class EventPlannerVR extends React.Component {
     this.state = {
        rotation: 130,
 	     zoom: -70,
-       textColor: 'white'
+       textColor: 'white',       
     };
+    const randomPosition = () => Math.floor(Math.random() * 10) - 5;
+    //const grid = xprod(1, 2);
+    //console.log('hello grid ' + grid);
+    // this.tables = grid.map((entry, index) => {
+    //   console.log('grid '+index);
+    //   return {
+    //     x: entry[0] * 8 + randomPosition(),
+    //     y: entry[1] * 8 + randomPosition(),
+    //     id: index,
+    //   };
+    // });
+    this.tables = []
+    var count = 0
+    for (xPos = -2; xPos <= 2; xPos++) {
+     for (zPos = -3; zPos <= -1; zPos++) {
+       ++count;
+      this.tables.push({
+         x: 4 * xPos, // * 8 + randomPosition(),
+         z: 4 * zPos,
+         id: count,
+      })
+     }
+      //console.log('hello tables ' + this.tables);
+    }
+    this.tables.map(table => {
+      console.log('<table=' + JSON.stringify(table))
+    })
+
   }
 
   render() {
     return (
     <View>
-      <Pano source={asset('ballroom.jpg')}/>
-      
+
      <Text
         style={{
           color: this.state.textColor,
@@ -55,38 +85,29 @@ export default class EventPlannerVR extends React.Component {
           intensity={0.1}
           style={{transform: [{translate: [0, -600, -300]}]}}
         />
-      <Model 
-        style={{
-            transform: [
-              {translate: [-10, -10, -25]},
-              {scale: 0.005 },
-              {rotateY: 0},
-              {rotateX: 0},
-              {rotateZ: 0}
-            ],
-        }}
-        source={{
-           obj:asset('table.obj'),  
-        }}
-        texture={asset('wood3.jpg')}
-        lit={true} 
-        />
-      <Model 
-        style={{
-            transform: [
-              {translate: [10, -10, -25]},
-              {scale: 0.005 },
-              {rotateY: 0},
-              {rotateX: 0},
-              {rotateZ: 0}
-            ],
-        }}
-        source={{
-           obj:asset('table.obj'),  
-        }}
-        texture={asset('wood1.png')}
-        lit={true} 
-        />
+   
+  
+   <View>
+      {this.tables.map(table => {
+        return (<Model 
+            style={{
+                layoutOrigin: [0.5, 0.5],
+                transform: [
+                  {translate: [table.x, 0, table.z]},
+                  {scale: [0.001, 0.001, 0.001] },
+                  {translate: [0, 0, -1000]},
+                ],
+            }}
+            source={{
+              obj:asset('table.obj'),  
+            }}
+            texture={asset('wood3.jpg')}
+            lit={true} 
+            />
+        );
+      })}
+   </View>
+ 
       <Plane
         dimWidth={10}
         dimHeight={10}

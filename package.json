@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "ovrui": "^1.1.0",
+    "ramda": "^0.23.0",
     "react": "~15.4.1",
     "react-native": "~0.42.0",
-    "three": "^0.80.1",
     "react-vr": "^1.1.0",
-    "react-vr-web": "^1.1.0"
+    "react-vr-web": "^1.1.0",
+    "three": "^0.80.1",
+    "tinyfun": "^1.0.7"
   },
   "devDependencies": {
     "babel-jest": "^19.0.0",
