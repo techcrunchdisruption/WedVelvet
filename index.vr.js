@@ -51,7 +51,7 @@ export default class EventPlannerVR extends React.Component {
     //     id: index,
     //   };
     // });
-    this.calculateTables(1);
+    this.calculateTables(2);
     //this.stage = true;
     this.showBigTable = false;
     this.changeToStage = this.changeToStage.bind(this);
@@ -130,14 +130,24 @@ export default class EventPlannerVR extends React.Component {
             ],
         }}
         />
+        <View
+  style={{
+      layoutOrigin: [0.5, 0.5],
+      transform: [{translate: [0, -1, -3]}],
+  }}
+  >
+<Button text='Say something' callback={ () => this.doSomethingInteresting() } />
+
+
+</View>
         <View>
-  {  (this.showBigTable ?
+        {  (this.showBigTable ?
      <Model
          style={{
              layoutOrigin: [0.5, 0.5],
              transform: [
-               {translate: [0, 0, -5]},
-               {scale: [0.021, 0.021, 0.021] },
+               {translate: [0, -1, -5]},
+               {scale: [0.021, 0.011, 0.021] },
              ],
          }}
          source={{
@@ -156,8 +166,8 @@ export default class EventPlannerVR extends React.Component {
          style={{
              layoutOrigin: [0.5, 0.5],
              transform: [
-               {translate: [table.x, 0, table.z]},
-               {scale: [0.001, 0.001, 0.001] },
+               {translate: [table.x, -2, table.z-3]},
+               {scale: [0.0013, 0.0013, 0.0013] },
              ],
          }}
          source={{
