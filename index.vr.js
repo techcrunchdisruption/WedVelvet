@@ -12,7 +12,7 @@ import {
   Plane,
 } from 'react-vr';
 
-//import Button from './button.js';
+import Button from './button.js';
 //import Table from './table.js';
 
 //import {flatten, range, map, xprod} from 'ramda';
@@ -36,10 +36,19 @@ export default class EventPlannerVR extends React.Component {
     //     id: index,
     //   };
     // });
+    this.calculateTables(1);
+    this.showBigTable = false
+
+  }
+  
+  calculateTables(size) {
     this.tables = []
     var count = 0
-    for (xPos = -2; xPos <= 2; xPos++) {
+    for (xPos = -size; xPos <= size; xPos++) {
      for (zPos = -3; zPos <= -1; zPos++) {
+       if(xPos == 0) {
+         continue;
+       }
        ++count;
       this.tables.push({
          x: 4 * xPos, // * 8 + randomPosition(),
@@ -52,16 +61,31 @@ export default class EventPlannerVR extends React.Component {
     this.tables.map(table => {
       console.log('<table=' + JSON.stringify(table))
     })
-
   }
 
+  doSomethingInteresting() {
+    console.log('doing something'); 
+    this.setState(() => { 
+      this.calculateTables(2);
+      this.showBigTable = ! this.showBigTable 
+    })
+  }
+
+  
   render() {
     return (
     <View>
-
+        <View         
+          style={{
+              layoutOrigin: [0.5, 0.5],
+              transform: [{translate: [7, -1, -3]}],
+          }}
+          >
+        <Button text='click me' callback={ () => this.doSomethingInteresting() } />
+      </View>
      <Text
         style={{
-          color: this.state.textColor,
+            color: this.state.textColor,
             backgroundColor: '#777879',
             fontSize: 0.8,
             fontWeight: '400',
@@ -86,7 +110,27 @@ export default class EventPlannerVR extends React.Component {
           style={{transform: [{translate: [0, -600, -300]}]}}
         />
    
-  
+   <View>
+     {  (this.showBigTable ? 
+        <Model 
+            style={{
+                layoutOrigin: [0.5, 0.5],
+                transform: [
+                  {translate: [0, 0, -5]},
+                  {scale: [0.021, 0.021, 0.021] },
+                ],
+            }}
+            source={{
+              obj:asset('rect-table.obj'),  
+            }}
+            texture={asset('wood3.jpg')}
+            lit={true} 
+            />     
+          :  
+            <View/>) 
+      } 
+   </View>
+
    <View>
       {this.tables.map(table => {
         return (<Model 
@@ -94,12 +138,11 @@ export default class EventPlannerVR extends React.Component {
                 layoutOrigin: [0.5, 0.5],
                 transform: [
                   {translate: [table.x, 0, table.z]},
-                  {scale: [0.001, 0.001, 0.001] },
-                  {translate: [0, 0, -1000]},
+                  {scale: [0.001, 0.001, 0.001] }, 
                 ],
             }}
             source={{
-              obj:asset('table.obj'),  
+              obj:asset('round-table.obj'),  
             }}
             texture={asset('wood3.jpg')}
             lit={true} 
