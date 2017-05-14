@@ -5,8 +5,8 @@ export default class Button extends React.Component {
 	constructor() { 
 		super(); 
 		this.styles = StyleSheet.create({ 
-			button: { margin: 0.05, width: 0.8, height: 0.2, backgroundColor: 'red', }, 
-			text: { fontSize: 0.3, textAlign: 'center', backgroundColor: 'red',}, 
+			button: { margin: 0.05, width: 1, height: 0.2, backgroundColor: 'grey', }, 
+			text: { fontSize: 0.2, textAlign: 'center', backgroundColor: 'grey',}, 
         }); 
 	} 
 		render() { 

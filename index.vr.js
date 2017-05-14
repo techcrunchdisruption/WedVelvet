@@ -107,14 +107,21 @@ export default class EventPlannerVR extends React.Component {
         <Overlay overlayCallback={this.hideOverlay}/>
       </View>
       </View> : <View>
-      <Pano source={asset('Testing.png')}/>      
+      <Pano source={asset('testing2.jpg')}
+          style={{
+              layoutOrigin: [0.5, 0.5],
+              transform: [
+                {rotateY: 90},
+              ],
+          }}
+      />      
       <View
         style={{
             layoutOrigin: [0.5, 0.5],
             transform: [{translate: [7, -1, -3]}],
         }}
         >
-      <Button text='click me' callback={ () => this.doSomethingInteresting() } />
+      <Button text='Say something' callback={ () => this.doSomethingInteresting() } />
 
 
     </View>
