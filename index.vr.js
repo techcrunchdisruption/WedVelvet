@@ -51,8 +51,8 @@ export default class EventPlannerVR extends React.Component {
        }
        ++count;
       this.tables.push({
-         x: 4 * xPos, // * 8 + randomPosition(),
-         z: 4 * zPos,
+         x: 3 * xPos, // * 8 + randomPosition(),
+         z: 3 * zPos,
          id: count,
       })
      }
