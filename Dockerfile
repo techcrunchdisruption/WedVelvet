@@ -22,6 +22,7 @@ COPY .watchmanconfig $HOME
 
 #COPY rn-cli.config.js $HOME/
 #COPY index.vr.js $HOME/
+COPY *.pem $HOME/
 COPY *.js $HOME/
 COPY package.json $HOME/
 COPY vr/ $HOME/vr/
@@ -31,6 +32,9 @@ RUN npm install
 RUN npm cache clean
 
 EXPOSE 8081
+EXPOSE 8000
 
-CMD ["npm", "start"]
+COPY start.sh $HOME/
 
+#CMD ["npm", "start"]
+CMD [ "/home/appuser/start.sh" ]

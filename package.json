@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "http-proxy": "^1.16.2",
     "ovrui": "^1.1.0",
     "ramda": "^0.23.0",
     "react": "~15.4.1",
