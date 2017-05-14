@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>EventPlannerVR</title>
+    <style>body { margin: 0; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  </head>
+  <body>
+      <script type="text/javascript">
+        if (!('webkitSpeechRecognition' in window)) {
+          upgrade();
+        } else {
+          var recognition = new webkitSpeechRecognition();
+          recognition.continuous = true;
+          recognition.onresult = function(event) {
+            if (event.results.length > 0) {
+              console.log('onresult');
+              console.log('event='+ JSON.stringify(event));
+              var value = event.results[0][0].transcript;
+              //q.form.submit();
+              console.log('value='+ value)
+              recognition.stop()
+            }
+            recognition.onstop = function(event) {
+              console.log('onstop');
+              recognition.start();
+            }
+          }
+        }
+        recognition.start()
+      </script>
+    <!-- When you're ready to deploy your app, update this line to point to your compiled client.bundle.js -->
+    <script src="./client.bundle?platform=vr"></script>
+    <script>
+      // Initialize the React VR application
+      ReactVR.init(
+        // When you're ready to deploy your app, update this line to point to
+        // your compiled index.bundle.js
+        '../index.vr.bundle?platform=vr&dev=true',
+        // Attach it to the body tag
+        document.body,
+        // third argument is a map of initialization options
+        {
+          cursorVisibility: 'visible',
+        }      
+      );
+    </script>
+  </body>
+</html>
+
