@@ -82,6 +82,26 @@ export default class EventPlannerVR extends React.Component {
 
   doSomethingInteresting() {
     console.log('doing something');
+
+    var inputStr = 'Add tables for 20 guests';
+    let URL = 'http://localhost:8080/talkToWatson?input='+inputStr;
+    var myInit = { method: 'GET',
+           mode: 'cors'
+           };
+         fetch(URL, myInit)
+         .then(function(response) {
+           console.log('response' + response);
+            let myData = response.json();
+            console.log('myData ' + myData);
+            return myData;
+         })
+         .then(function(json) {
+            console.log('parsed json', json);
+         })
+         .catch(function(ex) {
+            console.log('parsing failed', ex);
+         })
+
     this.setState(() => {
       this.calculateTables(2);
       this.showBigTable = ! this.showBigTable
@@ -112,7 +132,7 @@ export default class EventPlannerVR extends React.Component {
         <Pano source={asset('Church_Photo.jpg')}/>
         <View>
         <Image source={{uri: '../static_assets/venue_options.png'}} style={{width: 16, height: 4, transform: [{translate: [-7, 1.5, 0]}]}} />
-        <Image source={{uri: '../static_assets/Transparant_Screen.png'}} onEnter={ () => this.changeToStage(3)} style={{width: 1, height: 1, transform: [{translate: [-3.30, 5, 0]}]}} />
+        <Image source={{uri: '../static_assets/Transparant_Screen.png'}} onEnter={ () => this.changeToStage(3)} style={{width: 1, height: 1, transform: [{translate: [-4.70, 4.8, 0]}]}} />
         <Image source={{uri: '../static_assets/Grace_Assistant_HomePage.png'}} style={{width: 30, height: 8, transform: [{translate: [-14.5, 8, -3]}]}} />
 
         </View>
@@ -136,9 +156,9 @@ export default class EventPlannerVR extends React.Component {
       transform: [{translate: [0, -1, -3]}],
   }}
   >
-<Button text='Say something' callback={ () => this.doSomethingInteresting() } />
 
 
+<Image source={{uri: '../static_assets/mic.png'}} onEnter={ () => this.doSomethingInteresting()} style={{width: .40, height: .40, transform: [{translate: [0, .002, 0]}]}} />
 </View>
         <View>
         {  (this.showBigTable ?
@@ -146,8 +166,8 @@ export default class EventPlannerVR extends React.Component {
          style={{
              layoutOrigin: [0.5, 0.5],
              transform: [
-               {translate: [0, -1, -5]},
-               {scale: [0.021, 0.011, 0.021] },
+               {translate: [0, -1, -7]},
+               {scale: [0.031, 0.021, 0.031] },
              ],
          }}
          source={{
